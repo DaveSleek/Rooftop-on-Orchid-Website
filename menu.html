@@ -1,0 +1,639 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Rooftop on Orchid | Menu</title>
+  <style>
+    :root {
+      --bg-color: #0a0714;
+      --accent-color: #cfa93f;
+      --text-color: #f4f4f4;
+      --neon-pink: #ff00ff;
+      --neon-blue: #00bfff;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    body {
+      background: var(--bg-color);
+      color: var(--text-color);
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    header {
+      background: rgba(0, 0, 0, 0.6);
+      position: fixed;
+      top: 0;
+      width: 100%;
+      z-index: 10;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 2rem;
+      backdrop-filter: blur(8px);
+    }
+
+    header h1 {
+      color: var(--accent-color);
+      font-weight: 700;
+      letter-spacing: 2px;
+      font-size: 1.2rem;
+    }
+
+    nav ul {
+      display: flex;
+      list-style: none;
+      gap: 1.5rem;
+    }
+
+    nav a {
+      color: var(--text-color);
+      text-decoration: none;
+      transition: color 0.3s;
+      font-size: 0.95rem;
+    }
+
+    nav a:hover {
+      color: var(--accent-color);
+    }
+
+     .hero {
+      height: 60vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      text-align: center;
+      margin-top: 64px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-bg {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      opacity: 0;
+      transition: opacity 1.5s ease-in-out;
+    }
+
+    .hero-bg.active {
+      opacity: 1;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero h2 {
+      font-size: 3rem;
+      color: var(--accent-color);
+      text-shadow: 0 0 15px var(--neon-pink);
+    }
+
+    .hero p {
+      font-size: 1.1rem;
+      margin-top: 1rem;
+      color: var(--text-color);
+      text-shadow: 0 0 8px var(--neon-blue);
+    }
+    
+    .logo-text {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    main {
+      padding: 2rem;
+      max-width: 1200px;
+      margin: -4rem auto 4rem; /* overlap hero */
+    }
+
+    .controls {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.5rem;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .search-bar {
+      flex: 1 1 320px;
+    }
+
+    .search-bar input {
+      width: 100%;
+      padding: 0.75rem 1rem;
+      border: none;
+      border-radius: 8px;
+      outline: none;
+      background: #101022;
+      color: var(--text-color);
+      box-shadow: 0 0 0 1px rgba(255,255,255,0.02) inset;
+    }
+
+    .categories {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    .categories button {
+      background: none;
+      border: 1px solid var(--accent-color);
+      color: var(--accent-color);
+      padding: 0.4rem 0.9rem;
+      border-radius: 20px;
+      cursor: pointer;
+      transition: all 0.25s ease;
+      font-size: 0.9rem;
+    }
+
+    .categories button.active,
+    .categories button:hover {
+      background: var(--accent-color);
+      color: var(--bg-color);
+    }
+
+    .menu-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1.2rem;
+    }
+
+    .menu-item {
+      background: #121224;
+      border-radius: 12px;
+      overflow: hidden;
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+      display: flex;
+      flex-direction: column;
+      min-height: 320px;
+      border: 1px solid rgba(255,255,255,0.03);
+    }
+
+    .menu-item:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.6);
+    }
+
+    .menu-item img {
+      width: 100%;
+      height: 160px;
+      object-fit: cover;
+      display: block;
+    }
+
+    .menu-item-content {
+      padding: 1rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      flex: 1;
+    }
+
+    .menu-item-content h3 {
+      color: var(--accent-color);
+      margin-bottom: 0.25rem;
+      font-size: 1.05rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .menu-item-content .title-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 0.5rem;
+    }
+
+    .menu-item-content p {
+      font-size: 0.92rem;
+      color: #cfcfcf;
+      line-height: 1.4;
+      margin-bottom: 0.6rem;
+      flex: 1;
+    }
+
+    .price {
+      font-weight: 700;
+      color: var(--text-color);
+      background: rgba(0,0,0,0.2);
+      padding: 0.45rem 0.6rem;
+      border-radius: 8px;
+      text-align: right;
+      align-self: flex-end;
+      font-size: 0.95rem;
+      white-space: nowrap;
+    }
+
+    .category-header {
+      color: #bbb;
+      font-weight: 600;
+      margin: 1.2rem 0 0.6rem 0;
+      font-size: 1rem;
+    }
+
+    footer {
+      text-align: center;
+      padding: 2rem;
+      background: #0e0b1c;
+      color: #888;
+      font-size: 0.9rem;
+      border-top: 1px solid #222;
+      margin-top: 3rem;
+    }
+
+    @media (max-width: 860px) {
+      .hero h2 { font-size: 2rem; }
+      .menu-item { min-height: 300px; }
+    }
+
+    @media (max-width: 600px) {
+      header { flex-direction: column; gap: 0.5rem; padding: 0.75rem 1rem; }
+      .hero { height: 45vh; margin-top: 56px; }
+      main { margin-top: -2.5rem; padding: 1rem; }
+    }
+
+    .logo-text {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.logo-text .logo-img {
+  height: 32px;
+  width: auto;
+  vertical-align: middle;
+  filter: drop-shadow(0 0 10px #FFD700) drop-shadow(0 0 20px #FFA500);
+  animation: logoPulse 2s ease-in-out infinite alternate;
+}
+
+/* WhatsApp Floating Chat Button */
+.whatsapp-float {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background: #25D366; /* WhatsApp green */
+  color: #fff;
+  font-weight: 600;
+  text-decoration: none;
+  border-radius: 50px;
+  padding: 12px 18px;
+  box-shadow: 0 0 15px #25D366;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  z-index: 999;
+}
+
+.whatsapp-float:hover {
+  transform: scale(1.1);
+  box-shadow: 0 0 25px #25D366, 0 0 40px #FFD700;
+  background: linear-gradient(90deg, #25D366, #FFD700);
+  color: #000;
+}
+
+
+
+  </style>
+</head>
+<body>
+  <header>
+    
+  <div class="logo-text">
+  <a href="index.html" class="logo-text">
+    <img src="images/RoofTop Logo3.png" class="logo-img" alt="Rooftop on Orchid Logo">
+    <h1>Rooftop on Orchid</h1>
+  </a>
+</div>
+    <nav>
+      <ul>
+         <li><a href="menu.html">Menu</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="contact.html">Contact</a></li>
+         
+ 
+      </ul>
+    </nav>
+  </header>
+
+  <section class="hero">
+    <!-- Replace these placeholder URLs with your actual image URLs -->
+    <div class="hero-bg active" style="background-image: url('images/img4.webp');" id="hero-bg-0"></div>
+    <div class="hero-bg" style="background-image: url('images/img2.webp');" id="hero-bg-1"></div>
+    <div class="hero-bg" style="background-image: url('images/img3.webp');" id="hero-bg-2"></div>
+    <div class="hero-bg" style="background-image: url('images/img1.webp');" id="hero-bg-3"></div>
+    <div class="hero-content">
+      <h2>
+Sip. Dine. Vibe. Repeat</h2>
+      <p>Lagos’ Flamboyant Rooftop Escape</p>
+    </div>
+  </section>
+
+   
+  </section>
+
+  <main id="menu">
+    <div class="controls">
+      <div class="search-bar">
+        <input type="text" id="search" placeholder="Search menu or description...">
+      </div>
+      <div class="categories" id="categories"></div>
+    </div>
+
+    <div class="menu-grid" id="menuGrid"></div>
+  </main>
+
+  <footer>
+    <p>© 2025 Rooftop on Orchid | Designed by Sleekdave</p>
+  </footer>
+
+  <script>
+    /* Full menu dataset */
+    const menuItems = [
+      /* Tequila */
+      { name: "VOLCAN TEQUILA", category: "Tequila", image: "https://images.unsplash.com/photo-1513558161293-cdaf765ed2fd?w=400&h=300&fit=crop", description: "Premium tequila selection.", price: 331500 },
+      { name: "CASAMIGOS BLANCO", category: "Tequila", image: src="images/tequila-casamigos-blanco.jpg", description: "Smooth blanco tequila.", price: 442000 },
+      { name: "CASAMIGOS REPOSADO", category: "Tequila", image: src="images/casamigos reposado.jpeg", description: "Aged reposado with vanilla notes.", price: 497250 },
+      { name: "CLASE AZUL REPOSADO", category: "Tequila", image: src="images/clase Azul reopsado.jpg", description: "Luxurious reposado tequila.", price: 741234.85 },
+      { name: "DON JULIO 1942", category: "Tequila", image: src="images/don-julio-1942.webp", description: "Iconic tequila for celebrations.", price: 741234.85 },
+      { name: "TEQUILA SHOT", category: "Tequila", image: "https://images.unsplash.com/photo-1546171753-97d7676e4602?w=400&h=300&fit=crop", description: "Single shot.", price: 5525 },
+      { name: "818 RESPOSADO", category: "Tequila", image:src="images/818-reposado.webp", description: "Resposado from 818.", price: 221000 },
+      { name: "818 BLANCO", category: "Tequila", image: src="images/818-blanco.avif", description: "Blanco from 818.", price: 221000 },
+      { name: "818 Tequila", category: "Tequila", image: src="images/818TEQUILABLANCO.webp", description: "818 standard serving.", price: 5525 },
+      { name: "OLMECA TEQUILA", category: "Tequila", image: src="images/Olmeca-Blanco-Tequila-copy.webp", description: "Popular Olmeca brand.", price: 107500 },
+
+      /* Food */
+      { name: "FRIED FISH AND FRIES", category: "Food", image: src="images/Fried fish and fries HD.jpg", description: "Crispy fried fish served with fries.", price: 20442.5 },
+      { name: "ROOFTOP CALAMARI", category: "Food", image: "https://images.unsplash.com/photo-1599487488170-d11ec9c172f0?w=400&h=300&fit=crop", description: "Lightly fried calamari with dip.", price: 7735 },
+      { name: "BEEF TACOS", category: "Food", image: "https://images.unsplash.com/photo-1565299585323-38d6b0865b47?w=400&h=300&fit=crop", description: "Spiced beef tacos.", price: 14365 },
+      { name: "HONEY GLAZED SKYLINE WINGS", category: "Food", image: src="images/Honey-Glazed-Wings-and-Sweet-Chili-Sauce.webp", description: "Sweet and sticky wings.", price: 12155 },
+      { name: "CRIPSY CHICKEN WINGS", category: "Food", image: "https://images.unsplash.com/photo-1527477396000-e27163b481c2?w=400&h=300&fit=crop", description: "Crispy fried chicken wings.", price: 11050 },
+      { name: "CRISPY CHICKEN STRIPES", category: "Food", image: "https://images.unsplash.com/photo-1562967914-608f82629710?w=400&h=300&fit=crop", description: "Breaded chicken strips.", price: 13812 },
+      { name: "SHISH KABOBS", category: "Food", image: "https://images.unsplash.com/photo-1603360946369-dc9bb6258143?w=400&h=300&fit=crop", description: "Grilled skewers of meat.", price: 13260 },
+      { name: "PEPPERED SAUCE", category: "Food", image: "https://images.unsplash.com/photo-1472476443507-c7a5948772fc?w=400&h=300&fit=crop", description: "Spicy peppered sauce (side).", price: 1657.5 },
+      { name: "GARLIC MAYO", category: "Food", image:  src="images/Lemon-Garlic-Aioli-Featured-Image1.jpg", description: "Creamy garlic mayonnaise (side).", price: 2210 },
+      { name: "COCONUT RICE", category: "Food", image: "https://images.unsplash.com/photo-1596560548464-f010549b84d7?w=400&h=300&fit=crop", description: "Aromatic coconut rice.", price: 8840 },
+      { name: "CHINESE RICE", category: "Food", image: "https://images.unsplash.com/photo-1603133872878-684f208fb84b?w=400&h=300&fit=crop", description: "Savory fried rice.", price: 15470 },
+      { name: "ORIENTAL RICE", category: "Food", image: "https://images.unsplash.com/photo-1516684732162-798a0062be99?w=400&h=300&fit=crop", description: "Oriental-style rice.", price: 16575 },
+      { name: "STEAMED WHITE RICE", category: "Food", image: src="images/steamed white rice.webp", description: "Simple steamed rice.", price: 5525 },
+      { name: "ROOFTOP SPICED FRIES", category: "Food", image: "https://images.unsplash.com/photo-1573080496219-bb080dd4f877?w=400&h=300&fit=crop", description: "House spiced fries.", price: 4420 },
+      { name: "CRISPY YAM FRIES", category: "Food", image: "https://images.unsplash.com/photo-1639024471283-03518883512d?w=400&h=300&fit=crop", description: "Crispy yam fries.", price: 5193.5 },
+      { name: "DICED PLANTAIN", category: "Food", image: src="images/Diced Plantain.webp", description: "Fried diced plantain.", price: 6630 },
+      { name: "SPAGHETTI BOLOGNESE", category: "Food", image: "https://images.unsplash.com/photo-1598866594230-a7c12756260f?w=400&h=300&fit=crop", description: "Classic bolognese pasta.", price: 17569.5 },
+      { name: "PRAWN PENNE ARABIATA", category: "Food", image: "https://images.unsplash.com/photo-1621996346565-e3dbc646d9a9?w=400&h=300&fit=crop", description: "Spicy prawn penne.", price: 16464.5 },
+      { name: "ROOFTOP CHICKEN ALFREDO", category: "Food", image: "https://images.unsplash.com/photo-1645112411341-6c4fd023714a?w=400&h=300&fit=crop", description: "Creamy chicken alfredo.", price: 16464.5 },
+      { name: "CHICKEN PENNE PASTA", category: "Food", image: "https://images.unsplash.com/photo-1621996346565-e3dbc646d9a9?w=400&h=300&fit=crop", description: "Penne with grilled chicken.", price: 18785 },
+      { name: "REGAL KING PRAWNS", category: "Food", image: "https://images.unsplash.com/photo-1633504581786-316c8002b1b9?w=400&h=300&fit=crop", description: "Large king prawns.", price: 24862.5 },
+      { name: "ROOFTOP BARBECUE CHICKEN", category: "Food", image: "https://images.unsplash.com/photo-1532550907401-a500c9a57435?w=400&h=300&fit=crop", description: "BBQ glazed chicken.", price: 18122 },
+      { name: "SMOKY BBQ WINGS", category: "Food", image: "https://images.unsplash.com/photo-1606502281004-f86cf1282af5?w=400&h=300&fit=crop", description: "Smoky flavored wings.", price: 13260 },
+      { name: "BARBECUE CROAKER FISH WITH FRIES", category: "Food", image: src="images/barbecue croaker fish with fries .jpeg", description: "Whole croaker with fries.", price: 27625 },
+      { name: "SPICY PEPPERED CHICKEN", category: "Food", image: "https://images.unsplash.com/photo-1598103442097-8b74394b95c6?w=400&h=300&fit=crop", description: "Peppered chicken with spice.", price: 13812.5 },
+      { name: "SPICED PEPPERED BEEF", category: "Food", image: "https://images.unsplash.com/photo-1529692236671-f1f6cf9683ba?w=400&h=300&fit=crop", description: "Spiced beef, peppered.", price: 13260 },
+      { name: "ZESTY PEPPERED SNAIL", category: "Food", image: src="images/zesty peppered snails.jpeg", description: "Peppered snail delicacy.", price: 15470 },
+      { name: "SPICY CHICKEN SUYA SKEWERS", category: "Food", image: "https://images.unsplash.com/photo-1558030006-450675393462?w=400&h=300&fit=crop", description: "Suya-style chicken skewers.", price: 12155 },
+      { name: "SPECIAL ROOFTOP COMBO", category: "Food", image: "https://images.unsplash.com/photo-1555939594-58d7cb561ad1?w=400&h=300&fit=crop", description: "Chef's special combo.", price: 13260 },
+      { name: "ROOFTOP CHICKEN FAJITAS", category: "Food", image: src="images/rooftop chicken fajitas.jpg", description: "Sizzling chicken fajitas.", price: 13260 },
+      { name: "CRIPSY CHICKEN WRAPS", category: "Food", image: "https://images.unsplash.com/photo-1626700051175-6818013e1d4f?w=400&h=300&fit=crop", description: "Crispy chicken in a wrap.", price: 11050 },
+      { name: "HEALTHY SHREDDED CHICKEN SOUP", category: "Food", image: "https://images.unsplash.com/photo-1547592166-23ac45744acd?w=400&h=300&fit=crop", description: "Light shredded chicken soup.", price: 13260 },
+      { name: "SPICY CURRY CHICKEN SOUP", category: "Food", image: src="images/spicy currry chicken soup.jpg", description: "Spicy curry-flavored soup.", price: 13260 },
+      { name: "ROOFTOP GRILL LOVER", category: "Food", image: "https://images.unsplash.com/photo-1544025162-d76694265947?w=400&h=300&fit=crop", description: "Large grill platter.", price: 110500 },
+      { name: "CRISP COLESLAW", category: "Food", image: src="images/crisp crunchy Coleslaw.webp", description: "Fresh coleslaw side.", price: 5525 },
+      { name: "TAKE AWAY PACK", category: "Food", image: src="images/take away pack.jpg", description: "Takeaway packaging.", price: 1105 },
+      { name: "PLATTER MENU (fries, BBQ chicken wings, Yam chips, Prawns, Fried plantain, Onion rings)", category: "Food", image: src="images/delicious-fast-food-platter-featuring-glazed-bbq-chicken-wings-crispy-french-fries-golden-onion-rings-fresh-mixed-salad-382594913.webp", description: "Large shared platter.", price: 61327.5 },
+      { name: "Seafood Pasta", category: "Food", image: "https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?w=400&h=300&fit=crop", description: "Pasta with assorted seafood.", price: 20995 },
+      { name: "GOAT MEAT PEPPER SOUP WITH YAM/PLANTAIN", category: "Food", image: src="images/Nigerian-Goat-meat-pepper-soup plantain-main-photo-2.jpg", description: "Hearty goat pepper soup.", price: 24310 },
+      { name: "CHICKEN BURGER WITH FRIES", category: "Food", image: "https://images.unsplash.com/photo-1572802419224-296b0aeee0d9?w=400&h=300&fit=crop", description: "Grilled chicken burger.", price: 14365 },
+      { name: "BEEF BURGER WITH FRIES", category: "Food", image: "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=400&h=300&fit=crop", description: "Beef burger with fries.", price: 14365 },
+      { name: "Isi Ewu", category: "Food", image: src="images/isi ewu.jpg", description: "Traditional delicacy.", price: 22100 },
+      { name: "Jollof rice", category: "Food", image: "https://images.unsplash.com/photo-1604329760661-e71dc83f8f26?w=400&h=300&fit=crop", description: "Spiced jollof rice.", price: 11050 },
+      { name: "CHICKEN PEPPER SOUP WITH YAM/PLANTAIN", category: "Food", image: src="images/chicken pepper soup with yam plantain.jpg", description: "Chicken pepper soup with sides.", price: 22100 },
+      { name: "STIR FRY SPAGHETTI WITH GRILL CHICKEN BREAST", category: "Food", image: "https://images.unsplash.com/photo-1612874742237-6526221588e3?w=400&h=300&fit=crop", description: "Stir fry spaghetti and chicken.", price: 20442.5 },
+      { name: "STIR FRY VEGETABLES/STEAM VEG", category: "Food", image: "https://images.unsplash.com/photo-1540420773420-3366772f4999?w=400&h=300&fit=crop", description: "Vegetarian stir fry or steamed veg.", price: 11050 },
+
+      /* Champagne */
+      { name: "ACE OF SPADE BRUT", category: "Champagne", image: "https://images.unsplash.com/photo-1547595628-c61a29f496f0?w=400&h=300&fit=crop", description: "Premium Ace of Spades.", price: 995050.86 },
+      { name: "BELAIRE RARE ROSE", category: "Champagne", image: "https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?w=400&h=300&fit=crop", description: "Rare rosé champagne.", price: 221000 },
+      { name: "CRISTAL", category: "Champagne", image: src="images/8-a-louis-roederer-cristal.jpg", description: "High-end Cristal.", price: 1215500 },
+      { name: "DOMPERIGNOM", category: "Champagne", image: src="images/dom-perignon-2015.jpg", description: "Dom Pérignon classic.", price: 939250 },
+      { name: "LAURENT PERRIER BRUT 1812", category: "Champagne", image: "https://images.unsplash.com/photo-1585553616435-2dc0a54e271d?w=400&h=300&fit=crop", description: "Laurent Perrier Brut.", price: 221000 },
+      { name: "MOET NECTAR ROSE", category: "Champagne", image: src="images/Moet Nectar Rose.webp", description: "Moët Nectar Rosé.", price: 276250 },
+      { name: "VEUVE RICH", category: "Champagne", image:src="images/Veuve Rich.jpg", description: "Veuve Clicquot Rich.", price: 408850 },
+      { name: "VEUVE BRUT", category: "Champagne", image: src="images/Veuve brut.jpg", description: "Veuve Clicquot Brut.", price: 331500 },
+
+      /* Wine */
+      { name: "BARON D'ARIGNAC CARTE DIOR", category: "Wine", image:src="images/Baron-D-Arignac-Pays-Doc-Rogue-Cabernet-Sauvignon-Red-Wine.webp", description: "Elegant table wine.", price: 44200 },
+      { name: "BARON D'ARIGNAC SWEET", category: "Wine", image: src="images/Baron-D-Arignac-Pays-Doc-Rogue-Cabernet-Sauvignon-Red-Wine.webp", description: "Sweet wine option.", price: 44200 },
+      { name: "NEDERBURG", category: "Wine", image: "https://images.unsplash.com/photo-1553361371-9b22f78e8b1d?w=400&h=300&fit=crop", description: "South African Nederburg.", price: 55250 },
+      { name: "ANNA SPINATO MOSCATO", category: "Wine", image: src="images/Anna Spinnato Moscato.png", description: "Sweet Moscato.", price: 44200 },
+
+      /* Whisky */
+      { name: "BLUE LABLE JOHNIE WALKER", category: "Whisky", image: "https://images.unsplash.com/photo-1527281400683-1aae777175f8?w=400&h=300&fit=crop", description: "Johnnie Walker Blue Label.", price: 795600 },
+      { name: "GLENFIDDISH GRAND CREW 23 YEAR OLD", category: "Whisky", image: "https://images.unsplash.com/photo-1569529465841-dfecdab7503b?w=400&h=300&fit=crop", description: "23 year single malt.", price: 1215500 },
+      { name: "GLENFIDDISH 26 YEAR OLD", category: "Whisky", image: src="images/glenfissh 26 yo.webp", description: "26 year aged malt.", price: 2099500 },
+      
+
+      /* Whisky continued */
+      { name: "GLENFIDDISH 21 YEAR OLD", category: "Whisky", image: src="images/glen-21yo.jpg", description: "21 year single malt.", price: 884000 },
+      { name: "GLENFIDDISH 15 YEAR OLD", category: "Whisky", image: src="images/glen-15.webp", description: "15 year single malt.", price: 276250 },
+      { name: "GLENFIDDISH 18 YEAR OLD", category: "Whisky", image: src="images/glenfidish 18.jpeg", description: "18 year single malt.", price: 386750 },
+      { name: "GLENMORANGIE 18 YEARS", category: "Whisky", image: src="images/glenmorangie 18.webp", description: "Glorious 18 year malt.", price: 298300 },
+      { name: "JAMESON BLACK BARREL", category: "Whisky", image: src="images/Jameson-Black-Barrel.jpeg", description: "Jameson Black Barrel.", price: 143650 },
+      { name: "MACALLAN 15 YEARS OLD", category: "Whisky", image: src="images/Macallan 15 classic cut.png", description: "Macallan 15 years.", price: 276250 },
+      { name: "MACALLAN 18 YEARS OLD", category: "Whisky", image: src="images/macallan 18 classic cut.jpg", description: "Macallan 18 years.", price: 618800 },
+      { name: "MACALLAN RARE CASk", category: "Whisky", image: src="images/macallan-rare-cask-2021-release-p9396-15437_image.jpg" , description: "Rare cask expression.", price: 773500 },
+      { name: "MACALLAN CLASSIC CUT", category: "Whisky", image: src= "images/macallan 18 classic cut.jpg", description: "Classic cut series.", price: 716040 },
+      { name: "MONKEY SHOULDER", category: "Whisky", image:src= "images/Monkey-Shoulder_Header.webp" , description: "Blended malt whisky.", price: 165750 },
+
+      /* Soda */
+      { name: "COCA COLA", category: "Soda", image: "https://images.unsplash.com/photo-1554866585-cd94860890b7?w=400&h=300&fit=crop", description: "Classic cola.", price: 2762.2 },
+
+      /* Juice */
+      { name: "CRANBERRY", category: "Juice", image:src= "images/Stute-Cranberry-Juice.png"  , description: "Cranberry juice.", price: 9392.5 },
+
+      /* Cognac */
+      { name: "D'USSE VSOP", category: "Cognac", image: src= "images/dusse_vsop.jpg" , description: "D'USSÉ VSOP cognac.", price: 276250 },
+      { name: "HENESSY V.S.O.P", category: "Cognac", image:src= "images/Hennessy V.S.O.P.jpg" , description: "Hennessy VSOP.", price: 250045 },
+      { name: "HENESSY X.O", category: "Cognac", image: src= "images/Hennessy X.O.jpg", description: "Hennessy XO.", price: 828750 },
+      { name: "MARTELL BLUE SWIFT", category: "Cognac", image: src= "images/Martell Blue Swift.jpg", description: "Martell Blue Swift.", price: 221000 },
+      { name: "REMY MARTIN XO", category: "Cognac", image: src = "images/Remy Martin XO.jpg", description: "Rémy Martin XO.", price: 828750 },
+      { name: "REMY MARTIN 1738", category: "Cognac", image:src= "images/Remy Martin 1738.webp", description: "Rémy Martin 1738.", price: 309400 },
+
+      /* Energy Drink */
+      { name: "RED BULL", category: "Energy Drink", image: src= "images/Red Bull.webp", description: "Energy drink.", price: 5525 },
+
+      /* Gin */
+      { name: "HENDRICK GIN", category: "Gin", image: src= "images/Hendricks Gin.webp", description: "Hendrick's gin.", price: 176800 },
+
+      /* Cocktails */
+      { name: "WHITE RUSSIA", category: "Cocktail", image: src= "images/White Russia.webp", description: "Vodka, Irish Cream, Kahlua.", price: 10497.5 },
+      { name: "BLACK RUSSIA", category: "Cocktail", image:  src= "images/Black Russia.webp", description: "Vodka, Kahlua.", price: 10497.5 },
+      { name: "PORN STAR MARTINI", category: "Cocktail", image: "https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?w=400&h=300&fit=crop", description: "Vodka, Passion fruit puree, Orange Liqueur, Lime juice.", price: 10497.5 },
+      { name: "COSMOPOLITAN", category: "Cocktail", image: src= "images/Cosmopolitan.jpg", description: "Vodka citron, lemon juice, Cointreau, cranberry.", price: 10497.5 },
+      { name: "SEX ON THE BEACH", category: "Cocktail", image: "https://images.unsplash.com/photo-1536935338788-846bb9981813?w=400&h=300&fit=crop", description: "Vodka, Peach schnapps, lemon juice, Pineapple juice, Cranberry.", price: 10497.5 },
+      { name: "CLASSIC MOJITO", category: "Cocktail", image: "https://images.unsplash.com/photo-1551538827-9c037cb4f32a?w=400&h=300&fit=crop", description: "Rum, Lemon Juice, Mint leaves, Brown sugar, Simple syrup.", price: 10497.5 },
+      { name: "DAQUIRI (SHAKEN)", category: "Cocktail", image: src= "images/Daiquiri shaker.webp", description: "Rum, Lemon juice, Simple syrup.", price: 10497.5 },
+      { name: "OLD FASHION", category: "Cocktail", image: src= "images/Old Fashion.webp", description: "Angostura bitters, Brown sugar, Bourbon.", price: 10497.5 },
+      { name: "WHISKEY SOUR WITH EGG", category: "Cocktail", image: src= "images/Whisky sour with eggs.jpg", description: "Bourbon, Lemon juice, Simple syrup, Fresh egg.", price: 10497.5 },
+      { name: "WHISKEY SMASH", category: "Cocktail", image: src= "images/Whisky Smash.jpg", description: "Whiskey, Mint leaves, Simple syrup, Lemon juice.", price: 10497.5 },
+      { name: "STRAWBERRY", category: "Cocktail", image: "https://images.unsplash.com/photo-1609951651556-5334e2706168?w=400&h=300&fit=crop", description: "Gin, Fresh strawberry, Grenadine, Strawberry puree, Lemon juice.", price: 10497.5 },
+      { name: "BARBEQUE", category: "Cocktail", image: "https://images.unsplash.com/photo-1514361892635-6b07e31e75f9?w=400&h=300&fit=crop", description: "Ginger, Gin, Cointreau, Lemon.", price: 10497.5 },
+      { name: "NEGRONI", category: "Cocktail", image: src= "images/Negroni.jpg", description: "Gin, Campari, Sweet red vermouth.", price: 10497.5 },
+      { name: "COGNAC MANHATTAN", category: "Cocktail", image: src= "images/Cognac Manhattan.jpeg", description: "Cognac, Angostura bitters, Sweet vermouth.", price: 10497.5 },
+      { name: "MARGARITA", category: "Cocktail", image: src= "images/Margarita.jpg", description: "Tequila, Simple syrup, Lemon juice, Agave syrup.", price: 10497.5 },
+      { name: "LONG ISLAND TEA", category: "Cocktail", image:src= "images/Long Island Tea.webp", description: "Vodka, Rum, Gin, Cointreau, Coke, Wedge of lemon, Lemon juice.", price: 10497.5 },
+      { name: "PINK PETALS", category: "Cocktail", image: src= "images/Pink Petals.jpg", description: "Strawberry, Coconut syrup, Simple syrup.", price: 10497.5 },
+      { name: "VIRGIN COLADA", category: "Cocktail", image: src= "images/Virgin Colada.webp", description: "Fresh pineapple, Coconut cream, Pineapple, Whipping cream.", price: 10497.5 },
+      { name: "ROOFTOP POLKA", category: "Cocktail", image: src= "images/Rooftop Polka.webp", description: "Vodka, Grenadine, Coconut flix, Strawberry, Raspberry.", price: 14917.5 },
+      { name: "ORKID SHOWER", category: "Cocktail", image: src= "images/Orkid Shower.webp", description: "Gin, Ginger, Strawberry, Lemon juice, Orange juice, Mint leaves.", price: 14917.5 },
+      { name: "ROOKIE WITH PASSION", category: "Cocktail", image: src= "images/Rookie with passion.webp", description: "Gin, Passion fruit, Pineapple juice, Simple syrup, Infused cinnamon.", price: 14917.5 },
+      { name: "EL-ZACKINO", category: "Cocktail", image: src= "images/El Zackino Cocktail.jpg", description: "Rum, Vanilla, Coconut, Lime, Pineapple juice, Simple syrup.", price: 14917.5 },
+      { name: "MILK SHAKE", category: "Cocktail", image: "https://images.unsplash.com/photo-1572490122747-3968b75cc699?w=400&h=300&fit=crop", description: "Creamy milk shake.", price: 10497.5 },
+      { name: "CHAPMAN", category: "Cocktail", image:src= "images/Chapman.webp", description: "Refreshing non-alcoholic cocktail.", price: 10497.5 },
+      { name: "TAKE AWAY CUP", category: "Cocktail", image: src= "images/Take away cup.png", description: "Disposable cup for takeaway.", price: 331.5 },
+
+      /* Shisha */
+      { name: "WATERMELON SHISHA", category: "Shisha", image: src= "images/Watermelon Shisha.jpg", description: "Watermelon flavored shisha.", price: 22100 },
+      { name: "MINT SHISHA", category: "Shisha", image: src= "images/Mint Shisha.jpg", description: "Mint flavored shisha.", price: 22100 },
+      { name: "STRAWBERRY SHISHA", category: "Shisha", image: src= "images/Strawberry Shisha.webp", description: "Strawberry shisha.", price: 22100 },
+      { name: "GUM SHISHA", category: "Shisha", image: src= "images/Gum Shisha.webp", description: "Gum flavored shisha.", price: 22100 },
+      { name: "GUM AND MINT SHISHA", category: "Shisha", image: src= "images/Gum and mint shisha.jpeg", description: "Mixed gum & mint.", price: 22100 },
+      { name: "GRAPE SHISHA", category: "Shisha", image:  src= "images/Grape Shisha.jpg", description: "Grape shisha.", price: 22100 },
+      { name: "GRAPES & MINT SHISHA", category: "Shisha", image: src= "images/Grape and mint Shisha.webp", description: "Grapes with mint.", price: 22100 },
+      { name: "LEMON AND MINT SHISHA", category: "Shisha", image: src= "images/Lemon and mint Shisha.jpeg", description: "Lemon & mint combo.", price: 22100 },
+      { name: "ICE MINT SHISHA", category: "Shisha", image: src= "images/Ice mint Shisha.webp", description: "Extra-cool mint.", price: 22100 },
+      { name: "MILK SHISHA", category: "Shisha", image:  src= "images/Milk Shisha.jpeg", description: "Creamy milk shisha.", price: 22100 },
+      { name: "POWER BULL SHISHA", category: "Shisha", image: src= "images/Power Bull Shisha.jpeg", description: "Energy-infused shisha.", price: 22100 },
+      { name: "BLACK GRAPES SHISHA", category: "Shisha", image: src= "images/Black grapes shisha.jpeg", description: "Black grape flavor.", price: 22100 },
+      { name: "ORANGE SHISHA", category: "Shisha", image:src= "images/Orange Shisha.jpeg", description: "Citrus orange shisha.", price: 22100 },
+      { name: "TWO APPLE SHISHA", category: "Shisha", image: src= "images/Two Apple Shisha.webp", description: "Two-apple classic.", price: 22100 },
+      { name: "LEMON SHISHA", category: "Shisha", image: src= "images/Lemon Shisha.jpg", description: "Pure lemon flavor.", price: 22100 },
+
+      /* Beer */
+      { name: "Heineken", category: "Beer", image: src= "images/Heineken.jpg", description: "Brewed lager.", price: 5525 },
+
+      /* Water */
+      { name: "water", category: "Water", image: src= "images/Water.jpg", description: "Bottled water.", price: 2762.5 },
+
+      /* Uncategorized / Others */
+      { name: "Chivita", category: "Uncategorized", image: src= "images/Chivita.jpg", description: "Fruit juice brand.", price: 6630 },
+      { name: "SIP AND PAINT WITH YAM FRIES OR ROOFTOP SPICY FRIES WITH COCKTAILS", category: "Uncategorized", image: src= "images/Sip and paint cocktails.jpeg", description: "Event package.", price: 27625 }
+    ];
+
+    /* JavaScript Functions */
+    const menuGrid = document.getElementById('menuGrid');
+    const searchInput = document.getElementById('search');
+    const categoriesDiv = document.getElementById('categories');
+    const categories = ["All", ...new Set(menuItems.map(i => i.category))].sort((a,b) => (a === "All") ? -1 : a.localeCompare(b));
+    let activeCategory = "All";
+
+    function formatPrice(n) {
+      if (typeof n !== "number") n = Number(n) || 0;
+      return '₦' + n.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    }
+
+    function renderCategories() {
+      categoriesDiv.innerHTML = "";
+      categories.forEach(cat => {
+        const btn = document.createElement('button');
+        btn.textContent = cat;
+        btn.className = cat === activeCategory ? 'active' : '';
+        btn.onclick = () => {
+          activeCategory = cat;
+          renderMenu();
+          renderCategories();
+          menuGrid.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        };
+        categoriesDiv.appendChild(btn);
+      });
+    }
+
+    function renderMenu() {
+      const q = searchInput.value.trim().toLowerCase();
+      const filtered = menuItems.filter(item => {
+        const matchesCategory = activeCategory === "All" || item.category === activeCategory;
+        const matchesSearch = !q || item.name.toLowerCase().includes(q) || (item.description && item.description.toLowerCase().includes(q));
+        return matchesCategory && matchesSearch;
+      });
+
+      if (filtered.length === 0) {
+        menuGrid.innerHTML = '<p style="color:#bbb; grid-column:1/-1; text-align:center;">No menu items found.</p>';
+        return;
+      }
+
+      menuGrid.innerHTML = filtered.map(item => `
+        <div class="menu-item" data-category="${item.category}">
+          <img src="${item.image}" alt="${escapeHtml(item.name)}">
+          <div class="menu-item-content">
+            <div class="title-row">
+              <h3>${escapeHtml(item.name)}</h3>
+            </div>
+            <p>${escapeHtml(item.description || '')}</p>
+            <div class="price">${formatPrice(item.price)}</div>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function escapeHtml(text) {
+      return String(text)
+        .replaceAll('&', '&amp;')
+        .replaceAll('<', '&lt;')
+        .replaceAll('>', '&gt;')
+        .replaceAll('"', '&quot;')
+        .replaceAll("'", '&#039;');
+    }
+
+    searchInput.addEventListener('input', () => {
+      renderMenu();
+    });
+
+    renderCategories();
+    renderMenu();
+    // Hero Background Slideshow - Changes every 5 seconds
+    const heroBackgrounds = document.querySelectorAll('.hero-bg');
+    let currentBg = 0;
+
+    function changeHeroBackground() {
+      heroBackgrounds[currentBg].classList.remove('active');
+      currentBg = (currentBg + 1) % heroBackgrounds.length;
+      heroBackgrounds[currentBg].classList.add('active');
+    }
+
+    setInterval(changeHeroBackground, 5000); // Change every 5 seconds
+
+  </script>
+  <!-- WhatsApp Float Button -->
+  <a href="https://api.whatsapp.com/send?phone=2349160002382&text=Hi%20Rooftop%20on%20Orchid!%20I'd%20like%20to%20book%20a%20table%20or%20ask%20a%20question."
+     class="whatsapp-float"
+     target="_blank"
+     rel="noopener noreferrer">
+    💬 Chat on WhatsApp
+  </a>
+
+</body>
+</html>
+
+      
+      
